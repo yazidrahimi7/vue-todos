@@ -1,17 +1,37 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>TODO APP</h1>
+    <div class="container">
+      <app-new @emitList="createdList"></app-new>
+      <app-todo-grid :list="list" @emitDelete="deleted"></app-todo-grid>
+    </div>
+    
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import New from './components/New.vue'
+import TodoGrid from './components/TodoGrid.vue'
 
 export default {
   name: 'App',
+  data() {
+    return {
+      list: []
+    }
+  },
+  methods: {
+    // newList coming from New.vue (not need to do anything, its auto since we used $emit)
+    createdList(newList) {
+      this.list.push(newList)
+    },
+    deleted(j) {
+      this.list.splice(j, 1)
+    }
+  },
   components: {
-    HelloWorld
+    appNew: New,
+    appTodoGrid: TodoGrid
   }
 }
 </script>
